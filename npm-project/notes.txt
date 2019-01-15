@@ -1,0 +1,3 @@
+To create a npm project
+1. npm init -y // create package.json
+2. npm i [package-name]

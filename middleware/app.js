@@ -23,7 +23,11 @@ app.get('/', (req, res) => {
     res.send('home \n');
 });
 
-app.get('/user', (req, res) => {
+app.get('/user', (req, res, next) => {
+    // inline middleware
+    console.log('inline middleware');
+    next();
+},  (req, res) => {
     res.send('user \n');
 });
 

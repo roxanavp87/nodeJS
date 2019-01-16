@@ -1,10 +1,14 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 
 // parse incoming request bodies in a middleware before your handlers, available under the req.body property.
 // to test use:  curl localhost:3000/user/?authkey='1234' -i 'Content-Type: application/json'
 app.use(bodyParser.json());
+
+// get a formatted response, example: GET /user/?authkey=1234 200 5.424 ms - 14 
+app.use(morgan('dev'));
 
 // simple middleware
 app.use((req, res, next) => {

@@ -1,5 +1,10 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+
+// parse incoming request bodies in a middleware before your handlers, available under the req.body property.
+// to test use:  curl localhost:3000/user/?authkey='1234' -i 'Content-Type: application/json'
+app.use(bodyParser.json());
 
 // simple middleware
 app.use((req, res, next) => {
@@ -20,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('home \n');
+    res.send({msg: 'home'});
 });
 
 app.get('/user', (req, res, next) => {
@@ -28,7 +33,8 @@ app.get('/user', (req, res, next) => {
     console.log('inline middleware');
     next();
 },  (req, res) => {
-    res.send('user \n');
+    // res.send('user \n');
+    res.send({msg: 'user'});
 });
 
 app.listen(3000);

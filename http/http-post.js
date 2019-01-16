@@ -17,6 +17,7 @@ const req = http.request(options, (res) => {
     console.log(`BODY: ${chunk}`)
   })
   res.on('end', () => {
+    res.statusCode = 200;
     console.log('No more data in response.')
   })
 })

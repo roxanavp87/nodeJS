@@ -7,7 +7,7 @@ const morgan = require('morgan');
 // to test use:  curl localhost:3000/user/?authkey='1234' -i 'Content-Type: application/json'
 app.use(bodyParser.json());
 
-// get a formatted response, example: GET /user/?authkey=1234 200 5.424 ms - 14 
+// server logs, example: GET /user/?authkey=1234 200 5.424 ms - 14 
 app.use(morgan('dev'));
 
 // simple middleware

@@ -27,26 +27,22 @@ app.post('/posts/:postId/comments',[
     }
 );
 
-// // update a post
-// app.put('/posts/:id', [ 
-//     check('name').trim().isLength({ min: 3 }),
-//     check('url').trim().isURL(),
-//     check('text').trim().not().isEmpty(),],
-//     (req, res) => {
+// update a comment
+app.put('/posts/:postId/comments/:commentId', [ 
+    check('text').trim().not().isEmpty()],
+    (req, res) => {
         
-//         const errors = validationResult(req);
-//         if (!errors.isEmpty()) {
-//             return res.status(422).json({ errors: errors.array() });
-//         }
-//         const id = req.params.id;
-//         posts[id].name = req.body.name;
-//         posts[id].url = req.body.url;
-//         posts[id].text = req.body.text
-//         res.send(posts[id]);
-//     }
-// );
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.array() });
+        }
+        posts[req.params.postId].comments[req.params.commentId].text = req.body.text;
+        res.send(posts[req.params.postId].comments[req.params.commentId]);
+    }
+);
 
-// app.delete('/posts/:id', (req, res) => {
-//     posts.splice(req.params.id, 1);
-//     res.send();
-// });
+// delete a comment
+app.delete('/posts/:postId/comments/:commentId', (req, res) => {
+    posts[req.params.postId].comments.splice(req.params.commentId, 1);
+    res.send();
+});

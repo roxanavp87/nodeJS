@@ -49,3 +49,8 @@ app.put('/posts/:id', [
         res.send(posts[id]);
     }
 );
+
+app.delete('/posts/:id', (req, res) => {
+    posts.splice(req.params.id, 1);
+    res.send();
+});

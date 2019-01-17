@@ -32,7 +32,7 @@ app.post('/posts',[
 );
 
 // update a post
-app.put('/posts/:id', [ 
+app.put('/posts/:postId', [ 
     check('name').trim().isLength({ min: 3 }),
     check('url').trim().isURL(),
     check('text').trim().not().isEmpty(),],
@@ -42,7 +42,7 @@ app.put('/posts/:id', [
         if (!errors.isEmpty()) {
             return res.status(422).json({ errors: errors.array() });
         }
-        const id = req.params.id;
+        const id = req.params.postId;
         posts[id].name = req.body.name;
         posts[id].url = req.body.url;
         posts[id].text = req.body.text
@@ -50,7 +50,7 @@ app.put('/posts/:id', [
     }
 );
 
-app.delete('/posts/:id', (req, res) => {
-    posts.splice(req.params.id, 1);
+app.delete('/posts/:postId', (req, res) => {
+    posts.splice(req.params.postId, 1);
     res.send();
 });

@@ -10,6 +10,12 @@ let posts = require('./data/posts.json');
 // console.log(posts);
 
 // middleware
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+// support parsing of application/json type post data
 app.use(bodyParser.json());
 
 

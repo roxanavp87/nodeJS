@@ -6,6 +6,7 @@ const errorhandler = require('errorhandler');
 const mongodb= require('mongodb');
 const assert = require('assert');
 
+
 const app = express();
 module.exports = app;
 
@@ -25,9 +26,19 @@ mongodb.MongoClient.connect(url, function(err, client) {
 
     const db = client.db(dbName);
 
+
     app.get('/accounts', (req, res, next) => {
         db.collection('accounts')
         .find({}, {sort: {_id: -1}})
+        .toArray((error, accounts) => {
+            if (error) return next(error)
+            res.send(accounts)
+        })
+    })
+
+    app.get('/accounts/name/:name', (req, res, next) => {
+        db.collection('accounts')
+        .find({name: req.params.name}, {sort: {_id: -1}})
         .toArray((error, accounts) => {
             if (error) return next(error)
             res.send(accounts)
@@ -46,6 +57,17 @@ mongodb.MongoClient.connect(url, function(err, client) {
         db.collection('accounts')
         .update({_id: mongodb.ObjectID(req.params.id)}, 
             {$set: req.body}, 
+            (error, results) => {
+            if (error) return next(error)
+            res.send(results)
+            }
+        )
+    })
+
+    app.put('/accounts/name/:id', (req, res, next) => {
+        db.collection('accounts')
+        .update({_id: mongodb.ObjectID(req.params.id)}, 
+            {$set: {name: req.body.name}}, 
             (error, results) => {
             if (error) return next(error)
             res.send(results)
